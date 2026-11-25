@@ -22,7 +22,9 @@
 .paper-authors{margin:0;font-size:clamp(13px,1.4vw,17px);font-weight:600}
 .paper-authors li,.paper-affiliations li{white-space:nowrap}
 .paper-authors sup,.paper-affiliations sup{color:var(--blue)}
-.paper-affiliations{margin:5px 0;color:var(--muted);font-size:13px}
+.paper-affiliations{margin:5px 0;color:var(--ink);font-size:clamp(14px,1.25vw,16px)}
+.paper-affiliations a{text-decoration:underline;text-decoration-color:var(--muted);text-underline-offset:.2em}
+.paper-affiliations a:hover{color:var(--blue);text-decoration-color:currentColor}
 .paper-notes{margin:4px 0;color:var(--muted);font-size:12px}
 .paper-notes a{color:var(--blue)}
 .paper-links{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0}
