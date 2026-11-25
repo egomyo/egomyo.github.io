@@ -79,7 +79,6 @@
           <a class="button" role="link" aria-disabled="true">arXiv</a>
           <a class="button" href="https://github.com/SunGL001/EgoMyo" target="_blank" rel="noopener">GitHub</a>
           <a class="button" id="paper-dataset-link" role="link" aria-disabled="true" data-zh="数据集">Dataset</a>
-          <a class="button primary" href="#method-demos" data-zh="方法演示">Method demos</a>
         </div>
       </div>
       <section class="paper-abstract" aria-labelledby="abstract-title">
@@ -90,7 +89,7 @@
       </section>
     </section>
     <figure class="paper-figure overview-figure wrap">
-      <a href="assets/paper/fig-1.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution" data-zh-label="打开论文图 1 原尺寸"><img src="assets/paper/fig-1.webp" width="3635" height="890" alt="EgoMyo dataset: 50 participants, 33,989 benchmark trials, 5.75 million video frames, and 34 contact configurations. The right panel compares force estimates for a held-out trial." data-zh-alt="EgoMyo 数据集：50 位受试者、33,989 条基准试次、575 万视频帧和 34 种接触组合。右图对比一条测试试次的力估计。"></a>
+      <a href="assets/paper/fig-1.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution" data-zh-label="打开图 1 原尺寸"><img src="assets/paper/fig-1.webp" width="3635" height="890" alt="EgoMyo dataset: 50 participants, 33,989 benchmark trials, 5.75 million video frames, and 34 contact configurations. The right panel compares force estimates for a held-out trial." data-zh-alt="EgoMyo 数据集：50 位受试者、33,989 条基准试次、575 万视频帧和 34 种接触组合。右图对比一条测试试次的力估计。"></a>
       <figcaption>
         <strong data-zh="图 1 · 数据集与任务概览">Figure 1 · Dataset and task overview</strong>
         <span data-zh="右图以一条测试试次为例，对比各方法的接触与力估计。">The right panel compares contact and force estimates on a held-out trial.</span>
@@ -113,8 +112,8 @@
       <div class="wrap">
         <div class="section-heading"><h2 id="method-title">MyoBridge</h2><p data-zh="MyoBridge 按手部区域融合视觉与肌电，再将各区域的估计力分配到预测为接触的网格顶点。">MyoBridge combines vision and muscle activity for each hand region, then distributes each region’s estimated force across the mesh vertices predicted to be in contact.</p></div>
         <figure class="paper-figure">
-          <a href="assets/paper/fig-4.webp" target="_blank" rel="noopener" aria-label="Open Figure 4 at full resolution" data-zh-label="打开论文图 4 原尺寸"><img src="assets/paper/fig-4.webp" width="3800" height="1032" loading="lazy" alt="MyoBridge encoding, region-gated fusion, and region-to-surface decoding" data-zh-alt="MyoBridge 输入编码、分区域门控融合及从区域到表面的解码流程"></a>
-          <figcaption><strong data-zh="图 4 · MyoBridge 架构">Figure 4 · MyoBridge architecture</strong><span data-zh="视觉编码器提供几何线索，肌电编码器提供发力线索。每个区域根据自身状态调整肌电贡献。">The visual encoder provides geometric features. A region-specific gate controls the contribution of wrist sEMG features.</span></figcaption>
+          <a href="assets/paper/fig-4.webp" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution" data-zh-label="打开图 2 原尺寸"><img src="assets/paper/fig-4.webp" width="3800" height="1032" loading="lazy" alt="MyoBridge encoding, region-gated fusion, and region-to-surface decoding" data-zh-alt="MyoBridge 输入编码、分区域门控融合及从区域到表面的解码流程"></a>
+          <figcaption><strong data-zh="图 2 · MyoBridge 架构">Figure 2 · MyoBridge architecture</strong><span data-zh="视觉编码器提供几何线索，肌电编码器提供发力线索。每个区域根据自身状态调整肌电贡献。">The visual encoder provides geometric features. A region-specific gate controls the contribution of wrist sEMG features.</span></figcaption>
         </figure>
       </div>
     </section>
@@ -137,16 +136,16 @@
         <div class="section-heading"><h2 id="coverage-title" data-zh="采集与标注">Capture and Annotations</h2><p data-zh="每只手独立佩戴两次腕带。按采集方案，每次佩戴完成 34 种接触组合，每种重复 5 次。">Participants fitted the wristband twice for each hand. The protocol called for five repetitions of all 34 contact configurations after each fitting.</p></div>
         <div class="paper-grid acquisition-grid">
           <figure class="paper-figure">
-            <a href="assets/paper/fig-2.webp" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution" data-zh-label="打开论文图 2 原尺寸"><img src="assets/paper/fig-2.webp" width="3000" height="2491" loading="lazy" alt="Capture setup, seven hand regions, synchronized trial data, and signal statistics" data-zh-alt="采集设备、七个手部区域、试次同步数据和信号统计"></a>
-            <figcaption><strong data-zh="图 2 · 采集、标注与信号统计">Figure 2 · Capture, annotations, and signal statistics</strong><span data-zh="展示同一试次的第一视角、三维手姿态、压力和腕部肌电。">Egocentric video, 3D hand pose, pressure, and wrist sEMG from the same trial.</span></figcaption>
+            <a href="assets/paper/fig-2.webp" target="_blank" rel="noopener" aria-label="Open Figure 3 at full resolution" data-zh-label="打开图 3 原尺寸"><img src="assets/paper/fig-2.webp" width="3000" height="2491" loading="lazy" alt="Capture setup, seven hand regions, synchronized trial data, and signal statistics" data-zh-alt="采集设备、七个手部区域、试次同步数据和信号统计"></a>
+            <figcaption><strong data-zh="图 3 · 采集、标注与信号统计">Figure 3 · Capture, annotations, and signal statistics</strong><span data-zh="展示同一试次的第一视角、三维手姿态、压力和腕部肌电。">Egocentric video, 3D hand pose, pressure, and wrist sEMG from the same trial.</span></figcaption>
           </figure>
           <figure class="paper-figure configuration-figure">
-            <a href="assets/paper/fig-a2.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A2 at full resolution" data-zh-label="打开补充图 A2 原尺寸"><img src="assets/paper/fig-a2.webp" width="1932" height="3300" loading="lazy" alt="31 finger configurations and three palm configurations" data-zh-alt="31 种手指组合和 3 种掌部接触"></a>
-            <figcaption><strong data-zh="补充图 A2 · 34 种接触组合">Supplementary Figure A2 · Contact configurations</strong><span data-zh="每张卡片展示一种组合在峰值总力附近的第一视角画面。">Each card shows an egocentric frame near peak force for one configuration.</span></figcaption>
+            <a href="assets/paper/fig-a2.webp" target="_blank" rel="noopener" aria-label="Open Figure 4 at full resolution" data-zh-label="打开图 4 原尺寸"><img src="assets/paper/fig-a2.webp" width="1932" height="3300" loading="lazy" alt="31 finger configurations and three palm configurations" data-zh-alt="31 种手指组合和 3 种掌部接触"></a>
+            <figcaption><strong data-zh="图 4 · 34 种接触组合">Figure 4 · Contact configurations</strong><span data-zh="每张卡片展示一种组合在峰值总力附近的第一视角画面。">Each card shows an egocentric frame near peak force for one configuration.</span></figcaption>
           </figure>
           <figure class="paper-figure camera-figure">
-            <a href="assets/paper/fig-a1.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A1 at full resolution" data-zh-label="打开补充图 A1 原尺寸"><img src="assets/paper/fig-a1.webp" width="2130" height="266" loading="lazy" alt="Egocentric and four external views of the same capture area" data-zh-alt="同一采集区域的第一视角和四路外部相机图像"></a>
-            <figcaption><strong data-zh="补充图 A1 · 五路相机视角">Supplementary Figure A1 · Camera views</strong><span data-zh="第一视角视频和腕部肌电用作模型输入，多视角画面用于重建手部网格。">Egocentric video and wrist sEMG are model inputs. Multiview footage supports hand mesh reconstruction during annotation.</span></figcaption>
+            <a href="assets/paper/fig-a1.webp" target="_blank" rel="noopener" aria-label="Open Figure 5 at full resolution" data-zh-label="打开图 5 原尺寸"><img src="assets/paper/fig-a1.webp" width="2130" height="266" loading="lazy" alt="Egocentric and four external views of the same capture area" data-zh-alt="同一采集区域的第一视角和四路外部相机图像"></a>
+            <figcaption><strong data-zh="图 5 · 五路相机视角">Figure 5 · Camera views</strong><span data-zh="第一视角视频和腕部肌电用作模型输入，多视角画面用于重建手部网格。">Egocentric video and wrist sEMG are model inputs. Multiview footage supports hand mesh reconstruction during annotation.</span></figcaption>
           </figure>
         </div>
         <section class="dataset-viewer" id="explore" aria-labelledby="explore-title">
