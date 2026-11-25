@@ -1,4 +1,12 @@
 'use strict';
+
+const siteHeader = document.querySelector('.site-header');
+const updateHeaderHeight = () => {
+  document.documentElement.style.setProperty('--header-height', `${siteHeader.offsetHeight}px`);
+};
+updateHeaderHeight();
+new ResizeObserver(updateHeaderHeight).observe(siteHeader);
+
 const $ = (id) => document.getElementById(id);
 const video = $('video');
 const state = {data:null,sample:null,pressure:null,loading:0};
