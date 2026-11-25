@@ -2,8 +2,6 @@
 const $ = (id) => document.getElementById(id);
 const video = $('video');
 const state = {data:null,sample:null,pressure:null,loading:0};
-const hero = {sample:null};
-const heroVideo = $('hero-video');
 const regionNames = [
   ['Thumb', '拇指'], ['Index', '食指'], ['Middle', '中指'], ['Ring', '无名指'],
   ['Little', '小指'], ['Upper palm', '上掌'], ['Lower palm', '下掌'],
@@ -156,12 +154,16 @@ function hand(viewer, id, meshStatus){
 }
 function signals(){
   if(!state.sample)return;
-  const s=state.sample,{ctx,w,h}=canvas('emg'),left=21,right=9,top=6,bottom=8;
+  const s=state.sample,{ctx,w,h}=canvas('emg'),left=28,right=9,top=6,bottom=8;
   ctx.strokeStyle='#edf2f6';ctx.lineWidth=1;
   for(let i=0;i<5;i++){const x=left+(w-left-right)*i/4;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,h-bottom);ctx.stroke();}
   const row=(h-top-bottom)/18;
   for(let ch=0;ch<18;ch++){
-    const y=top+(ch+.7)*row;ctx.fillStyle='#91a5b6';ctx.font='7px Arial';ctx.textAlign='left';ctx.fillText(String(ch+1).padStart(2,'0'),0,y);
+    const y=top+(ch+.7)*row;
+    ctx.fillStyle='#506679';
+    ctx.font='10px Arial';
+    ctx.textAlign='left';
+    ctx.fillText(String(ch+1).padStart(2,'0'),0,y);
     ctx.strokeStyle=ch%3===0?'#215beb':ch%3===1?'#1b9aa7':'#6ba3c9';ctx.lineWidth=.9;ctx.beginPath();
     s.emg.forEach((v,i)=>{const x=left+Math.max(0,Math.min(1,s.emg_times[i]/s.duration))*(w-left-right),yy=y-v[ch]*row*.75;i?ctx.lineTo(x,yy):ctx.moveTo(x,yy);});ctx.stroke();
   }
@@ -262,89 +264,6 @@ function bindRotation(viewer, surface, resetButton, redraw) {
 
 bindRotation(state, $('hand'), $('reset-view'), drawTrialHand);
 
-const drawHeroHand = () => hand(hero, 'hero-hand', $('hero-mesh-status'));
-bindRotation(hero, $('hero-hand'), $('hero-reset-view'), drawHeroHand);
-
-async function loadHero() {
-  const preview = $('hero-preview');
-  const base = `samples/${preview.dataset.sample}/`;
-  const play = $('hero-play');
-  const seek = $('hero-time');
-  const status = $('hero-status');
-  let errorLabels;
-  let animation;
-  const refreshLabels = () => {
-    play.textContent = heroVideo.paused ? localized('Play', '播放') : localized('Pause', '暂停');
-    if (errorLabels) status.textContent = localized(...errorLabels);
-  };
-  const showError = (english, chinese) => {
-    errorLabels = [english, chinese];
-    refreshLabels();
-    status.hidden = false;
-  };
-  const render = () => {
-    drawHeroHand();
-    seek.value = String(hero.time);
-    $('hero-time-label').textContent = `${hero.time.toFixed(2)} / ${hero.sample.duration.toFixed(2)} s`;
-  };
-  const sync = () => {
-    hero.time = Math.min(hero.sample.duration, heroVideo.currentTime);
-    render();
-  };
-  const tick = () => {
-    if (heroVideo.paused) return;
-    sync();
-    animation = requestAnimationFrame(tick);
-  };
-  document.addEventListener('site-languagechange', () => { refreshLabels(); drawHeroHand(); });
-  refreshLabels();
-  try {
-    Object.assign(hero, await loadMesh(base));
-    seek.max = String(hero.sample.duration);
-    render();
-    window.addEventListener('resize', () => requestAnimationFrame(drawHeroHand));
-    document.addEventListener('visibilitychange', () => { if (document.hidden) heroVideo.pause(); });
-    video.addEventListener('play', () => heroVideo.pause());
-    heroVideo.addEventListener('play', () => {
-      video.pause();
-      status.hidden = true;
-      refreshLabels();
-      cancelAnimationFrame(animation);
-      tick();
-    });
-    heroVideo.addEventListener('pause', () => {
-      cancelAnimationFrame(animation);
-      refreshLabels();
-      if (heroVideo.readyState >= 2) sync();
-    });
-    heroVideo.addEventListener('seeked', sync);
-    heroVideo.addEventListener('loadedmetadata', () => { heroVideo.currentTime = hero.time; }, {once:true});
-    heroVideo.addEventListener('error', () => showError('Video could not load. Refresh to retry.', '视频加载失败，请刷新重试。'));
-    seek.addEventListener('input', () => { heroVideo.currentTime = Number(seek.value); });
-    play.addEventListener('click', () => {
-      if (heroVideo.paused) heroVideo.play().catch(() => showError('Playback did not start. Select Play to retry.', '视频未开始播放，请再次点击播放。'));
-      else heroVideo.pause();
-    });
-    heroVideo.addEventListener('seeked', () => {
-      play.disabled = seek.disabled = false;
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-      let autoplayAttempted = false;
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.intersectionRatio < .5) heroVideo.pause();
-        else if (!autoplayAttempted && !document.hidden && video.paused && !heroVideo.played.length) {
-          autoplayAttempted = true;
-          heroVideo.play().catch(() => {});
-        }
-      }, {threshold:.5});
-      observer.observe(preview);
-    }, {once:true});
-    heroVideo.poster = base + hero.sample.poster;
-    heroVideo.src = base + hero.sample.video;
-  } catch (error) {
-    showError('Preview could not load. Refresh to retry.', '预览加载失败，请刷新重试。');
-    console.error('Homepage preview loading failed', error);
-  }
-}
 function configureDownload(metadata) {
   if (!metadata.dataset_url) return;
   const url = new URL(metadata.dataset_url, window.location.href);
@@ -405,4 +324,3 @@ async function start(){
   }catch(error){showTrialStatus('Dataset details could not load. Refresh to retry.', '数据说明加载失败，请刷新重试。');console.error('Dataset metadata loading failed',error);}
 }
 start();
-loadHero();
