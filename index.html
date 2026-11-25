@@ -5,8 +5,8 @@
   <meta name="description" content="EgoMyo is a dataset and benchmark for hand pose, contact, and force estimation from egocentric video and wrist sEMG." data-zh-content="EgoMyo 是基于第一视角视频与腕部肌电估计手部姿态、接触和力的数据集与基准。">
   <meta name="theme-color" content="#f0f6fb">
   <title data-zh="EgoMyo · 数据集与基准">EgoMyo · Dataset and Benchmark</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="language.js" defer></script><script src="app.js" defer></script><script src="benchmark.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=fixed-header">
+  <script src="language.js" defer></script><script src="app.js?v=fixed-header" defer></script><script src="benchmark.js" defer></script>
 </head>
 <body id="top">
   <a class="skip-link" href="#explore" data-zh="跳到交互演示">Skip to the interactive demo</a>
@@ -82,14 +82,8 @@
         <p data-zh="基于这些发现，我们提出 MyoBridge。它以手部区域为单位融合视觉和肌电，由各区域独立调节肌电的贡献，并在推理时仅把区域力分配到预测为接触的网格顶点。与最强基线相比，MyoBridge 在留出试次上的姿态误差和力误差分别降低 39.8% 和 18.5%，并在未见佩戴和未见受试者的测试中取得最低的姿态误差。">Guided by these findings, we propose MyoBridge, which makes the hand region the unit of vision–sEMG fusion, lets each region gate its own share of sEMG, and distributes regional force magnitudes only over predicted contact vertices at inference. On held-out trials, MyoBridge reduces pose and force error by 39.8% and 18.5% over the strongest baseline and achieves the lowest pose error on unseen sessions and subjects.</p>
       </section>
     </section>
-    <section class="facts wrap" aria-label="Paper benchmark statistics" data-zh-label="论文基准规模">
-      <div><strong>50</strong><span data-zh="参与者">Participants</span></div>
-      <div><strong>33,989</strong><span data-zh="论文基准试次">Benchmark trials</span></div>
-      <div><strong data-zh="575 万">5.75M</strong><span data-zh="视频帧">Video frames</span></div>
-      <div><strong>34</strong><span data-zh="接触组合">Contact configurations</span></div>
-    </section>
     <figure class="paper-figure overview-figure wrap">
-      <a href="assets/paper/fig-1.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution" data-zh-label="打开论文图 1 原尺寸"><img src="assets/paper/fig-1.webp" width="3635" height="890" alt="EgoMyo dataset scale, model inputs, and force estimates for one held-out trial" data-zh-alt="EgoMyo 数据规模、模型输入和一条留出试次的力估计结果"></a>
+      <a href="assets/paper/fig-1.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution" data-zh-label="打开论文图 1 原尺寸"><img src="assets/paper/fig-1.webp" width="3635" height="890" alt="EgoMyo dataset: 50 participants, 33,989 benchmark trials, 5.75 million video frames, and 34 contact configurations. The right panel compares force estimates for a held-out trial." data-zh-alt="EgoMyo 数据集：50 位受试者、33,989 条基准试次、575 万视频帧和 34 种接触组合。右图对比一条测试试次的力估计。"></a>
       <figcaption>
         <strong data-zh="图 1 · 数据集与任务概览">Figure 1 · Dataset and task overview</strong>
         <span data-zh="右图以一条测试试次为例，对比各方法的接触与力估计。">The right panel compares contact and force estimates on a held-out trial.</span>
