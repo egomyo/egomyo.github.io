@@ -249,9 +249,8 @@ async function loadSample(id){
     video.onloadedmetadata=()=>{if(request===state.loading)video.currentTime=state.time;};
     video.poster = s.poster ? base + s.poster : '';
     video.src=base+s.video;video.load();$('time').max=String(s.duration);$('time').disabled=false;$('play').disabled=false;
-    showTrialStatus(`${s.subject} · Session ${s.wearing} · ${englishActionName(s.action_name)} · ${s.mesh_frames} mesh frames`,
-                    `${s.subject} · 第 ${s.wearing} 次佩戴 · ${s.action_name} · ${s.mesh_frames} 帧手部网格`);
-    updateTrialSource();
+    showTrialStatus(`${s.subject} · Session ${s.wearing} · ${englishActionName(s.action_name)}`,
+                    `${s.subject} · 第 ${s.wearing} 次佩戴 · ${s.action_name}`);
     $('mesh-fallback').hidden=true;render();
   }catch(error){
     if(request!==state.loading)return;
@@ -321,24 +320,11 @@ function configureDownload(metadata) {
     resource.removeAttribute('aria-disabled');
   }
   link.textContent = localized('View on Hugging Face ↗', '在 Hugging Face 获取数据 ↗');
-  const release = metadata.publication;
-  $('release-status').textContent = release && !release.complete_release
-    ? localized(`${release.verified_groups}/${release.expected_groups} groups verified. See the dataset card for access and licensing.`, `已上传并校验 ${release.verified_groups}/${release.expected_groups} 组。下载权限与许可证见数据集卡。`)
-    : localized('See the dataset card for scope, access, and licensing.', '数据范围、下载权限与许可证见数据集卡。');
-}
-
-function updateTrialSource() {
-  if (!state.sample) return;
-  const {trial_id: trialId, source_annotation_path: path} = state.sample;
-  const source = $('source-text');
-  source.hidden = !trialId || !path;
-  source.textContent = source.hidden ? '' : localized(`Source trial ${trialId} · ${path}`, `来源试次 ${trialId} · ${path}`);
 }
 
 document.addEventListener('site-languagechange', () => {
   updatePlaybackLabel();
   if (trialStatus) showTrialStatus(...trialStatus);
-  updateTrialSource();
   if (state.data) {
     const names = new Map(state.data.samples.map(sample => [sample.id, sample.action_name]));
     for (const button of $('sample-buttons').children) button.lastElementChild.textContent = formatAction(names.get(button.dataset.sample));
