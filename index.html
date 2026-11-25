@@ -3,10 +3,15 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="EgoMyo is a dataset and benchmark for hand pose, contact, and force estimation from egocentric video and wrist sEMG." data-zh-content="EgoMyo 是基于第一视角视频与腕部肌电估计手部姿态、接触和力的数据集与基准。">
-  <meta name="theme-color" content="#f0f6fb">
+  <meta name="theme-color" content="#ffffff">
   <title data-zh="EgoMyo · 数据集与基准">EgoMyo · Dataset and Benchmark</title>
-  <link rel="stylesheet" href="style.css?v=fixed-header">
-  <script src="language.js" defer></script><script src="app.js?v=fixed-header" defer></script><script src="benchmark.js" defer></script>
+  <script>
+    try {
+      if (localStorage.getItem('egomyo-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="style.css?v=themes">
+  <script src="language.js" defer></script><script src="app.js?v=themes" defer></script><script src="benchmark.js" defer></script>
 </head>
 <body id="top">
   <a class="skip-link" href="#explore" data-zh="跳到交互演示">Skip to the interactive demo</a>
@@ -20,9 +25,15 @@
         <a href="#coverage" data-zh="数据采集">Capture</a>
         <a href="#download" data-zh="获取数据">Download</a>
       </nav>
-      <div class="language-options" role="group" aria-label="Site language" data-zh-label="网站语言">
-        <button type="button" lang="en" data-language="en" aria-pressed="true">EN</button>
-        <button type="button" lang="zh-CN" data-language="zh-CN" aria-pressed="false">中文</button>
+      <div class="site-controls">
+        <div class="site-switch" role="group" aria-label="Site language" data-zh-label="网站语言">
+          <button type="button" lang="en" data-language="en" aria-pressed="true">EN</button>
+          <button type="button" lang="zh-CN" data-language="zh-CN" aria-pressed="false">中文</button>
+        </div>
+        <div class="site-switch theme-options" role="group" aria-label="Site theme" data-zh-label="网站主题">
+          <button type="button" data-theme-choice="light" aria-label="Light theme" data-zh-label="浅色主题" aria-pressed="true"><span aria-hidden="true">☀︎</span></button>
+          <button type="button" data-theme-choice="dark" aria-label="Dark theme" data-zh-label="深色主题" aria-pressed="false"><span aria-hidden="true">☾</span></button>
+        </div>
       </div>
     </div>
   </header>
@@ -42,28 +53,24 @@
           <li>Jun Zhu<sup>1,2,†</sup></li>
         </ul>
         <ul class="paper-affiliations" aria-label="Affiliations" data-zh-label="作者单位">
-          <li class="affiliation-tsinghua">
-            <a href="https://www.tsinghua.edu.cn/en/" target="_blank" rel="noopener">
-              <span class="affiliation-logo"><img src="assets/affiliations/tsinghua.png" alt="" width="159" height="50"></span>
-              <span class="affiliation-name"><sup>1</sup> <span data-zh="清华大学">Tsinghua University</span></span>
+          <li>
+            <a href="https://www.tsinghua.edu.cn/en/" target="_blank" rel="noopener" aria-label="1 Tsinghua University" data-zh-label="1 清华大学" title="Tsinghua University">
+              <sup>1</sup><img src="assets/affiliations/tsinghua.png" alt="" width="159" height="50">
             </a>
           </li>
-          <li class="affiliation-genspi">
-            <a href="https://www.genspi.com/en/" target="_blank" rel="noopener">
-              <span class="affiliation-logo"><img src="assets/affiliations/genspi.webp" alt="" width="320" height="97"></span>
-              <span class="affiliation-name"><sup>2</sup> <span data-zh="生数科技">GensPI Technology</span></span>
+          <li>
+            <a href="https://www.genspi.com/en/" target="_blank" rel="noopener" aria-label="2 GensPI Technology" data-zh-label="2 生数科技" title="GensPI Technology">
+              <sup>2</sup><img src="assets/affiliations/genspi.webp" alt="" width="320" height="97">
             </a>
           </li>
-          <li class="affiliation-astralive">
-            <a href="https://www.xy-ai.tech/en/" target="_blank" rel="noopener">
-              <span class="affiliation-logo"><img src="assets/affiliations/astralive.webp" alt="" width="320" height="59"></span>
-              <span class="affiliation-name"><sup>3</sup> AstrAlive Intelligence</span>
+          <li>
+            <a href="https://www.xy-ai.tech/en/" target="_blank" rel="noopener" aria-label="3 AstrAlive Intelligence" title="AstrAlive Intelligence">
+              <sup>3</sup><img src="assets/affiliations/astralive.webp" alt="" width="320" height="59">
             </a>
           </li>
-          <li class="affiliation-cortix">
-            <a href="https://getcortix.ai/" target="_blank" rel="noopener">
-              <span class="affiliation-logo"><img src="assets/affiliations/cortix.webp" alt="" width="320" height="104"></span>
-              <span class="affiliation-name"><sup>4</sup> Cortix AI</span>
+          <li>
+            <a href="https://getcortix.ai/" target="_blank" rel="noopener" aria-label="4 Cortix AI" title="Cortix AI">
+              <sup>4</sup><img class="cortix-wordmark" src="assets/affiliations/cortix.webp" alt="" width="480" height="95">
             </a>
           </li>
         </ul>
@@ -225,6 +232,6 @@
     </section>
   </main>
   <footer class="wrap"><a class="brand" href="#">Ego<span>Myo</span></a><p data-zh="基于第一视角视频与腕部肌电的手部状态估计">Physical Hand State Estimation from Egocentric Video and Wrist Electromyography</p><a href="#explore" data-zh="返回交互演示">Back to the demo</a></footer>
-  <a class="back-to-top" href="#top"><span aria-hidden="true">↑</span> <span data-zh="返回顶部">Back to top</span></a>
+  <a class="back-to-top" href="#top" hidden><span aria-hidden="true">↑</span> <span data-zh="返回顶部">Back to top</span></a>
 </body>
 </html>

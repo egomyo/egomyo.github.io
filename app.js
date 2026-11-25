@@ -163,16 +163,16 @@ function hand(viewer, id, meshStatus){
 function signals(){
   if(!state.sample)return;
   const s=state.sample,{ctx,w,h}=canvas('emg'),left=28,right=9,top=6,bottom=8;
-  ctx.strokeStyle='#edf2f6';ctx.lineWidth=1;
+  ctx.strokeStyle=signalTheme.grid;ctx.lineWidth=1;
   for(let i=0;i<5;i++){const x=left+(w-left-right)*i/4;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,h-bottom);ctx.stroke();}
   const row=(h-top-bottom)/18;
   for(let ch=0;ch<18;ch++){
     const y=top+(ch+.7)*row;
-    ctx.fillStyle='#506679';
+    ctx.fillStyle=signalTheme.label;
     ctx.font='10px Arial';
     ctx.textAlign='left';
     ctx.fillText(String(ch+1).padStart(2,'0'),0,y);
-    ctx.strokeStyle=ch%3===0?'#215beb':ch%3===1?'#1b9aa7':'#6ba3c9';ctx.lineWidth=.9;ctx.beginPath();
+    ctx.strokeStyle=signalTheme.traces[ch%3];ctx.lineWidth=.9;ctx.beginPath();
     s.emg.forEach((v,i)=>{const x=left+Math.max(0,Math.min(1,s.emg_times[i]/s.duration))*(w-left-right),yy=y-v[ch]*row*.75;i?ctx.lineTo(x,yy):ctx.moveTo(x,yy);});ctx.stroke();
   }
   const x=left+(w-left-right)*state.time/s.duration;ctx.strokeStyle='#f67750';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
@@ -185,6 +185,43 @@ function signals(){
 }
 function drawTrialHand(){hand(state,'hand',$('mesh-status'));}
 function render(){drawTrialHand();signals();if(state.sample){$('time').value=String(state.time);$('time-label').textContent=`${state.time.toFixed(2)} / ${state.sample.duration.toFixed(2)} s`;}}
+
+const themeRoot = document.documentElement;
+const themeButtons = [...document.querySelectorAll('[data-theme-choice]')];
+const signalTheme = {};
+
+function applyTheme(theme) {
+  themeRoot.dataset.theme = theme;
+  for (const button of themeButtons) {
+    button.setAttribute('aria-pressed', String(button.dataset.themeChoice === theme));
+  }
+  const styles = getComputedStyle(themeRoot);
+  signalTheme.grid = styles.getPropertyValue('--line').trim();
+  signalTheme.label = styles.getPropertyValue('--muted').trim();
+  signalTheme.traces = ['--trace-blue', '--trace-teal', '--trace-muted']
+    .map(property => styles.getPropertyValue(property).trim());
+  document.querySelector('meta[name="theme-color"]').content = styles.getPropertyValue('--white').trim();
+  render();
+}
+
+for (const button of themeButtons) {
+  button.addEventListener('click', () => {
+    const theme = button.dataset.themeChoice;
+    applyTheme(theme);
+    try { localStorage.setItem('egomyo-theme', theme); } catch {}
+  });
+}
+applyTheme(themeRoot.dataset.theme ?? 'light');
+
+const backToTop = document.querySelector('.back-to-top');
+function updateBackToTop() {
+  backToTop.hidden = window.scrollY < window.innerHeight;
+}
+window.addEventListener('scroll', updateBackToTop, {passive:true});
+window.addEventListener('resize', updateBackToTop);
+window.addEventListener('pageshow', updateBackToTop);
+updateBackToTop();
+
 function checkJSON(r){if(!r.ok)throw Error(`HTTP ${r.status}`);return r.json();}
 function checkBuffer(r){if(!r.ok)throw Error(`HTTP ${r.status}`);return r.arrayBuffer();}
 
