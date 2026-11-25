@@ -10,12 +10,13 @@
 </head>
 <body>
   <a class="skip-link" href="#explore" data-zh="跳到交互演示">Skip to the interactive demo</a>
-  <header class="navigation wrap">
+  <header class="navigation wrap" id="top">
     <a class="brand" href="#" aria-label="EgoMyo home" data-zh-label="EgoMyo 首页">Ego<span>Myo</span><i aria-hidden="true"></i></a>
     <nav aria-label="Main navigation" data-zh-label="主导航">
-      <a href="#explore" data-zh="交互演示">Demo</a>
-      <a href="#coverage" data-zh="数据采集">Capture</a>
+      <a href="#method-demos" data-zh="方法演示">Demos</a>
+      <a href="#method" data-zh="方法">Method</a>
       <a href="#results" data-zh="实验结果">Results</a>
+      <a href="#coverage" data-zh="数据采集">Capture</a>
       <a href="#download" data-zh="获取数据">Download</a>
     </nav>
     <div class="language-options" role="group" aria-label="Site language" data-zh-label="网站语言">
@@ -69,9 +70,15 @@
           <a class="button" role="link" aria-disabled="true">arXiv</a>
           <a class="button" href="https://github.com/SunGL001/EgoMyo" target="_blank" rel="noopener">GitHub</a>
           <a class="button" id="paper-dataset-link" role="link" aria-disabled="true" data-zh="数据集">Dataset</a>
-          <a class="button primary" href="#explore" data-zh="交互演示">Interactive demo</a>
+          <a class="button primary" href="#method-demos" data-zh="方法演示">Method demos</a>
         </div>
       </div>
+      <section class="paper-abstract" aria-labelledby="abstract-title">
+        <h2 id="abstract-title" data-zh="摘要">Abstract</h2>
+        <p data-zh="手部与环境的交互取决于手的构型、接触和力，即使外观几乎相同，接触状态和施力也可能不同。我们提出基于第一视角视频和腕部表面肌电（sEMG）的手部物理状态估计，结合视觉几何与神经肌肉信息，联合恢复这三个相互关联的分量。">Physical hand interaction depends on configuration, contact, and force, yet nearly identical appearances can conceal different contact states and exerted forces. We therefore formulate physical hand state estimation from egocentric video and wrist surface electromyography (sEMG), combining visual geometry with neuromuscular evidence to jointly recover these coupled components.</p>
+        <p data-zh="我们为此构建了 EgoMyo 基准，涵盖 50 位受试者、575 万视频帧、34 种接触组合和多次独立佩戴。该数据集将两种输入与三维手部姿态对齐，并将裸手压力测得的接触和法向力配准到手部表面。控制实验表明，视觉更擅长辨别空间结构，肌电更擅长估计力的大小。肌电的收益主要集中在视觉最不可靠的区域，而接触定位的准确度限制了力估计的精度。">To support this task, we introduce EgoMyo, a benchmark spanning 5.75M video frames, 50 participants, 34 contact configurations, and repeated donnings, synchronizing these inputs with 3D hand pose and with contact and normal force registered onto the hand surface from bare-hand pressure. Controlled analysis reveals that vision resolves spatial structure while sEMG better estimates force magnitude, that sEMG's gains concentrate in regions where vision is least reliable, and that contact localization limits force accuracy.</p>
+        <p data-zh="基于这些发现，我们提出 MyoBridge。它以手部区域为单位融合视觉和肌电，由各区域独立调节肌电的贡献，并在推理时仅把区域力分配到预测为接触的网格顶点。与最强基线相比，MyoBridge 在留出试次上的姿态误差和力误差分别降低 39.8% 和 18.5%，并在未见佩戴和未见受试者的测试中取得最低的姿态误差。">Guided by these findings, we propose MyoBridge, which makes the hand region the unit of vision–sEMG fusion, lets each region gate its own share of sEMG, and distributes regional force magnitudes only over predicted contact vertices at inference. On held-out trials, MyoBridge reduces pose and force error by 39.8% and 18.5% over the strongest baseline and achieves the lowest pose error on unseen sessions and subjects.</p>
+      </section>
     </section>
     <section class="facts wrap" aria-label="Paper benchmark statistics" data-zh-label="论文基准规模">
       <div><strong>50</strong><span data-zh="参与者">Participants</span></div>
@@ -83,80 +90,20 @@
       <a href="assets/paper/fig-1.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution" data-zh-label="打开论文图 1 原尺寸"><img src="assets/paper/fig-1.webp" width="3635" height="890" alt="EgoMyo dataset scale, model inputs, and force estimates for one held-out trial" data-zh-alt="EgoMyo 数据规模、模型输入和一条留出试次的力估计结果"></a>
       <figcaption>
         <strong data-zh="图 1 · 数据集与任务概览">Figure 1 · Dataset and task overview</strong>
-        <span data-zh="EgoMyo 将第一视角视频、腕部表面肌电（sEMG）与三维手部姿态、接触位置和压力测量对齐，用于评估手部姿态、接触和力的联合估计。">EgoMyo aligns egocentric video and wrist surface electromyography (sEMG) with 3D hand pose, contact, and pressure measurements to benchmark joint pose, contact, and force estimation.</span>
         <span data-zh="右图以一条测试试次为例，对比各方法的接触与力估计。">The right panel compares contact and force estimates on a held-out trial.</span>
       </figcaption>
     </figure>
-    <section class="explore-section" id="explore" aria-labelledby="explore-title">
-      <div class="wrap">
-        <div class="section-heading">
-          <h2 id="explore-title" data-zh="同步多模态试次演示">Synchronized Multimodal Trials</h2>
-          <p data-zh="选择试次并拖动时间轴，对照同步的视频、手部网格、肌电和压力数据。">Choose a trial and use the shared timeline to explore its synchronized video, hand mesh, muscle activity, and pressure data.</p>
-        </div>
-        <div id="sample-buttons" class="sample-buttons" role="group" aria-label="Select a recorded trial" data-zh-label="选择采集试次"></div>
-        <div class="playback">
-          <button id="play" type="button" class="play-button" disabled>Play</button>
-          <label class="visually-hidden" for="time" data-zh="试次时间">Trial time</label>
-          <input id="time" type="range" min="0" max="1" step="0.01" value="0" disabled>
-          <output id="time-label" for="time">0.00 / 0.00 s</output>
-        </div>
-        <p id="sample-status" class="sample-status" role="status" data-zh="正在加载试次…">Loading trial…</p>
-        <div class="demo-grid">
-          <article class="demo-panel">
-            <h3 data-zh="第一视角视频">Egocentric Video</h3>
-            <video id="video" class="demo-frame" playsinline muted preload="auto" aria-label="Egocentric video for the selected trial" data-zh-label="所选试次的第一视角视频"></video>
-          </article>
-          <article class="demo-panel">
-            <div class="demo-panel-heading"><h3 data-zh="MANO 表面力">MANO Surface Force</h3><span id="mesh-status" class="live-marker" hidden></span></div>
-            <div class="demo-frame mesh-frame">
-              <canvas id="hand" class="hand-view" aria-label="MANO mesh. Drag or use the arrow keys to rotate." data-zh-label="MANO 网格，可用鼠标拖动或方向键旋转" role="img" tabindex="0"></canvas>
-              <img id="mesh-fallback" src="assets/mano_hero.png" alt="MANO contact force example" data-zh-alt="MANO 接触力示例" hidden>
-            </div>
-            <div class="demo-panel-footer">
-              <div class="mesh-legend"><span data-zh="低">Low</span><div class="color-ramp" aria-hidden="true"></div><span data-zh="高">High</span></div>
-              <button id="reset-view" type="button" data-zh="重置视角">Reset view</button>
-            </div>
-          </article>
-        </div>
-        <div class="signal-layout">
-          <article class="signal-panel emg-panel"><div class="panel-heading"><h3 data-zh="腕部肌电">Wrist sEMG</h3><span data-zh="18 通道归一化">18 normalized channels</span></div><canvas id="emg" aria-label="Wrist sEMG RMS over time" data-zh-label="腕部肌电均方根时间线" role="img"></canvas><div class="panel-caption"><span data-zh="试次时间">Trial time</span><span>s</span></div></article>
-          <article class="signal-panel pressure-panel"><div class="panel-heading"><h3 data-zh="压力分布">Pressure Map</h3><span data-zh="降采样显示">Downsampled for display</span></div><canvas id="pressure" aria-label="Pressure mat heatmap" data-zh-label="压力板热图" role="img"></canvas><div class="panel-caption"><span data-zh="原始矩阵 105 × 185">105 × 185 source grid</span></div></article>
-          <article class="signal-panel force-panel"><div class="panel-heading"><h3 data-zh="区域力估计">Regional Force</h3><span>N</span></div><div id="region-bars" class="region-bars"></div><div class="panel-caption"><span data-zh="七区域总力">Seven-region sum</span><strong id="total-force">—</strong></div></article>
-        </div>
-        <details class="source-details">
-          <summary data-zh="试次与显示方法">Trial visualization</summary><p id="source-text" hidden></p>
-          <p data-zh="网页对展示用 MANO 网格做平滑和插值，使其与视频对齐。逐帧标签说明缺失网格的补帧方式。压力图按 3 × 5 个单元取平均，区域力曲线独立平滑。压力图与表面力热图共用 pressure2 时间轴。">The viewer smooths and interpolates the displayed MANO geometry to align it with the video. Frame labels identify how missing meshes were filled. The pressure map groups cells in blocks of 3 × 5, and the regional force curves are smoothed separately. The pressure display and surface heatmap use the same pressure2 timestamps.</p>
-        </details>
-        <section class="supplementary-demos" id="supplementary-demos" aria-labelledby="supplementary-title">
-          <div class="section-heading"><h2 id="supplementary-title" data-zh="补充演示视频">Supplementary Videos</h2><p data-zh="对照 MyoBridge 和基线方法如何用第一视角视频与 18 通道腕部肌电估计接触和力。">Compare how MyoBridge and the baselines estimate contact and force from egocentric video and 18-channel wrist sEMG.</p></div>
-          <div class="demo-grid">
-            <article class="demo-panel">
-              <h3 data-zh="补充视频 2">Supplementary Video 2</h3>
-              <video class="demo-frame" controls playsinline preload="none" poster="assets/demos/demo02.webp" src="assets/demos/demo02.mp4" aria-label="Supplementary Video 2" data-zh-label="补充视频 2"></video>
-            </article>
-            <article class="demo-panel">
-              <h3 data-zh="补充视频 3">Supplementary Video 3</h3>
-              <video class="demo-frame" controls playsinline preload="none" poster="assets/demos/demo03.webp" src="assets/demos/demo03.mp4" aria-label="Supplementary Video 3" data-zh-label="补充视频 3"></video>
-            </article>
-          </div>
-        </section>
-      </div>
-    </section>
-    <section class="paper-section wrap" id="coverage" aria-labelledby="coverage-title">
-      <div class="section-heading"><h2 id="coverage-title" data-zh="采集与标注">Capture and Annotations</h2><p data-zh="每只手独立佩戴两次腕带。按采集方案，每次佩戴完成 34 种接触组合，每种重复 5 次。">Participants fitted the wristband twice for each hand. The protocol called for five repetitions of all 34 contact configurations after each fitting.</p></div>
-      <div class="paper-grid acquisition-grid">
-        <figure class="paper-figure">
-          <a href="assets/paper/fig-2.webp" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution" data-zh-label="打开论文图 2 原尺寸"><img src="assets/paper/fig-2.webp" width="3000" height="2491" loading="lazy" alt="Capture setup, seven hand regions, synchronized trial data, and signal statistics" data-zh-alt="采集设备、七个手部区域、试次同步数据和信号统计"></a>
-          <figcaption><strong data-zh="图 2 · 采集、标注与信号统计">Figure 2 · Capture, annotations, and signal statistics</strong><span data-zh="展示同一试次的第一视角、三维手姿态、压力和腕部肌电。">Egocentric video, 3D hand pose, pressure, and wrist sEMG from the same trial.</span></figcaption>
-        </figure>
-        <figure class="paper-figure configuration-figure">
-          <a href="assets/paper/fig-a2.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A2 at full resolution" data-zh-label="打开补充图 A2 原尺寸"><img src="assets/paper/fig-a2.webp" width="1932" height="3300" loading="lazy" alt="31 finger configurations and three palm configurations" data-zh-alt="31 种手指组合和 3 种掌部接触"></a>
-          <figcaption><strong data-zh="补充图 A2 · 34 种接触组合">Supplementary Figure A2 · Contact configurations</strong><span data-zh="每张卡片展示一种组合在峰值总力附近的第一视角画面。">Each card shows an egocentric frame near peak force for one configuration.</span></figcaption>
-        </figure>
-        <figure class="paper-figure camera-figure">
-          <a href="assets/paper/fig-a1.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A1 at full resolution" data-zh-label="打开补充图 A1 原尺寸"><img src="assets/paper/fig-a1.webp" width="2130" height="266" loading="lazy" alt="Egocentric and four external views of the same capture area" data-zh-alt="同一采集区域的第一视角和四路外部相机图像"></a>
-          <figcaption><strong data-zh="补充图 A1 · 五路相机视角">Supplementary Figure A1 · Camera views</strong><span data-zh="第一视角视频和腕部肌电用作模型输入，多视角画面用于重建手部网格。">Egocentric video and wrist sEMG are model inputs. Multiview footage supports hand mesh reconstruction during annotation.</span></figcaption>
-        </figure>
+    <section class="paper-section method-demos wrap" id="method-demos" aria-labelledby="method-demos-title">
+      <div class="section-heading"><h2 id="method-demos-title" data-zh="MyoBridge 方法演示">MyoBridge Demonstrations</h2><p data-zh="对照 MyoBridge 和基线方法如何用第一视角视频与 18 通道腕部肌电估计接触和力。">Compare how MyoBridge and the baselines estimate contact and force from egocentric video and 18-channel wrist sEMG.</p></div>
+      <div class="demo-grid">
+        <article class="demo-panel">
+          <h3 data-zh="试次演示 1">Recorded trial 1</h3>
+          <video class="demo-frame" controls playsinline preload="none" poster="assets/demos/demo02.webp" src="assets/demos/demo02.mp4" aria-label="Recorded trial 1" data-zh-label="试次演示 1"></video>
+        </article>
+        <article class="demo-panel">
+          <h3 data-zh="试次演示 2">Recorded trial 2</h3>
+          <video class="demo-frame" controls playsinline preload="none" poster="assets/demos/demo03.webp" src="assets/demos/demo03.mp4" aria-label="Recorded trial 2" data-zh-label="试次演示 2"></video>
+        </article>
       </div>
     </section>
     <section class="paper-section method-section" id="method" aria-labelledby="method-title">
@@ -181,38 +128,64 @@
         <div id="benchmark-table" class="table-scroll" role="region" tabindex="0" aria-label="Baseline comparison, horizontally scrollable" data-zh-label="基准对比结果，可横向滚动"></div>
         <p class="table-note" data-zh="数值为均值 ± 标准差。V 为第一视角视频，E 为腕部肌电。MPJPE 和 PVE 分别表示关节和网格顶点的位置误差。F1 越高越好，位置误差和力的平均绝对误差越低越好。">Values are mean ± standard deviation. V denotes egocentric video and E denotes wrist sEMG. MPJPE and PVE measure joint and mesh vertex position error, respectively. Higher F1 and lower position and force errors are better.</p>
       </div>
-      <details class="result-card result-details">
-        <summary data-zh="表 4 · 跨试次消融实验">Table 4 · Cross-trial ablations</summary>
-        <p class="table-note" data-zh="比较移除肌电、视频或融合与解码模块后的姿态、接触与力估计。">The ablations measure performance after removing an input modality or modifying fusion or decoding.</p>
-        <div id="ablation-table" class="table-scroll" role="region" tabindex="0" aria-label="Ablation results, horizontally scrollable" data-zh-label="消融结果，可横向滚动"></div>
-      </details>
-      <details class="result-card result-details">
-        <summary data-zh="补充表 A3 · 训练集与测试集划分">Supplementary Table A3 · Training and test splits</summary>
-        <p class="table-note" data-zh="帧数为各指标按有效性筛选前的统计。">Frame counts are reported before metric-specific validity filtering.</p>
-        <div class="table-scroll" role="region" tabindex="0" aria-label="Training and test split sizes, horizontally scrollable" data-zh-label="训练与测试规模，可横向滚动">
-          <table class="metrics-table split-table">
-            <thead><tr><th scope="col" data-zh="划分">Split</th><th scope="col" data-zh="训练试次">Train trials</th><th scope="col" data-zh="训练帧数">Train frames</th><th scope="col" data-zh="测试试次">Test trials</th><th scope="col" data-zh="测试帧数">Test frames</th></tr></thead>
-            <tbody>
-              <tr><th scope="row" data-zh="跨试次">Cross-trial</th><td>20,399</td><td>3,453,937</td><td>13,590</td><td>2,300,961</td></tr>
-              <tr><th scope="row" data-zh="跨佩戴">Cross-session</th><td>16,995</td><td>2,889,496</td><td>16,994</td><td>2,865,402</td></tr>
-              <tr><th scope="row" data-zh="跨受试者">Cross-subject</th><td>23,797</td><td>4,014,944</td><td>10,192</td><td>1,739,954</td></tr>
-            </tbody>
-          </table>
+    </section>
+    <section class="paper-section dataset-section" id="coverage" aria-labelledby="coverage-title">
+      <div class="wrap">
+        <div class="section-heading"><h2 id="coverage-title" data-zh="采集与标注">Capture and Annotations</h2><p data-zh="每只手独立佩戴两次腕带。按采集方案，每次佩戴完成 34 种接触组合，每种重复 5 次。">Participants fitted the wristband twice for each hand. The protocol called for five repetitions of all 34 contact configurations after each fitting.</p></div>
+        <div class="paper-grid acquisition-grid">
+          <figure class="paper-figure">
+            <a href="assets/paper/fig-2.webp" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution" data-zh-label="打开论文图 2 原尺寸"><img src="assets/paper/fig-2.webp" width="3000" height="2491" loading="lazy" alt="Capture setup, seven hand regions, synchronized trial data, and signal statistics" data-zh-alt="采集设备、七个手部区域、试次同步数据和信号统计"></a>
+            <figcaption><strong data-zh="图 2 · 采集、标注与信号统计">Figure 2 · Capture, annotations, and signal statistics</strong><span data-zh="展示同一试次的第一视角、三维手姿态、压力和腕部肌电。">Egocentric video, 3D hand pose, pressure, and wrist sEMG from the same trial.</span></figcaption>
+          </figure>
+          <figure class="paper-figure configuration-figure">
+            <a href="assets/paper/fig-a2.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A2 at full resolution" data-zh-label="打开补充图 A2 原尺寸"><img src="assets/paper/fig-a2.webp" width="1932" height="3300" loading="lazy" alt="31 finger configurations and three palm configurations" data-zh-alt="31 种手指组合和 3 种掌部接触"></a>
+            <figcaption><strong data-zh="补充图 A2 · 34 种接触组合">Supplementary Figure A2 · Contact configurations</strong><span data-zh="每张卡片展示一种组合在峰值总力附近的第一视角画面。">Each card shows an egocentric frame near peak force for one configuration.</span></figcaption>
+          </figure>
+          <figure class="paper-figure camera-figure">
+            <a href="assets/paper/fig-a1.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A1 at full resolution" data-zh-label="打开补充图 A1 原尺寸"><img src="assets/paper/fig-a1.webp" width="2130" height="266" loading="lazy" alt="Egocentric and four external views of the same capture area" data-zh-alt="同一采集区域的第一视角和四路外部相机图像"></a>
+            <figcaption><strong data-zh="补充图 A1 · 五路相机视角">Supplementary Figure A1 · Camera views</strong><span data-zh="第一视角视频和腕部肌电用作模型输入，多视角画面用于重建手部网格。">Egocentric video and wrist sEMG are model inputs. Multiview footage supports hand mesh reconstruction during annotation.</span></figcaption>
+          </figure>
         </div>
-      </details>
-      <div class="paper-grid experiment-grid">
-        <figure class="paper-figure">
-          <a href="assets/paper/fig-7.webp" target="_blank" rel="noopener" aria-label="Open Figure 7 at full resolution" data-zh-label="打开论文图 7 原尺寸"><img src="assets/paper/fig-7.webp" width="2300" height="715" loading="lazy" alt="Force error contours for four methods around trained weights" data-zh-alt="四种方法在训练权重附近的力误差等高线"></a>
-          <figcaption><strong data-zh="图 7 · 参数扰动下的力估计误差">Figure 7 · Force error under weight perturbations</strong><span data-zh="对训练权重沿两个方向施加扰动，在 64 个留出帧上比较力误差。">Force error on 64 held-out frames as trained weights are perturbed along two directions.</span></figcaption>
-        </figure>
-        <figure class="paper-figure">
-          <a href="assets/paper/fig-a7.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A7 at full resolution" data-zh-label="打开补充图 A7 原尺寸"><img src="assets/paper/fig-a7.webp" width="3500" height="1627" loading="lazy" alt="Reference and predicted total force and frame-wise regional force error over full trials" data-zh-alt="完整试次的参考与预测总力曲线及逐帧区域力误差"></a>
-          <figcaption><strong data-zh="补充图 A7 · 完整试次力曲线">Supplementary Figure A7 · Full-trial force trajectories</strong><span data-zh="左侧比较参考与预测总力，右侧显示同一试次的逐帧区域力误差。">Reference and predicted total force are shown on the left; frame-wise regional force error is shown on the right.</span></figcaption>
-        </figure>
-        <figure class="paper-figure reconstruction-figure">
-          <a href="assets/paper/fig-a5.webp" target="_blank" rel="noopener" aria-label="Open Supplementary Figure A5 at full resolution" data-zh-label="打开补充图 A5 原尺寸"><img src="assets/paper/fig-a5.webp" width="3500" height="1768" loading="lazy" alt="Selected test frames with their sEMG windows and reference and predicted surface force" data-zh-alt="选取的测试帧及对应肌电窗口、参考与预测表面力"></a>
-          <figcaption><strong data-zh="补充图 A5 · 接触力重建示例">Supplementary Figure A5 · Contact force reconstruction</strong><span data-zh="每行展示一个成功重建的测试帧及其此前 200 ms 的 18 通道肌电。">Each row shows a successful reconstruction and the preceding 200 ms of 18-channel sEMG.</span></figcaption>
-        </figure>
+        <section class="dataset-viewer" id="explore" aria-labelledby="explore-title">
+          <div class="section-heading">
+            <h3 id="explore-title" class="viewer-title" data-zh="同步多模态试次演示">Synchronized Multimodal Trials</h3>
+            <p data-zh="选择试次并拖动时间轴，对照同步的视频、手部网格、肌电和压力数据。">Choose a trial and use the shared timeline to explore its synchronized video, hand mesh, muscle activity, and pressure data.</p>
+          </div>
+          <div id="sample-buttons" class="sample-buttons" role="group" aria-label="Select a recorded trial" data-zh-label="选择采集试次"></div>
+          <div class="playback">
+            <button id="play" type="button" class="play-button" disabled>Play</button>
+            <label class="visually-hidden" for="time" data-zh="试次时间">Trial time</label>
+            <input id="time" type="range" min="0" max="1" step="0.01" value="0" disabled>
+            <output id="time-label" for="time">0.00 / 0.00 s</output>
+          </div>
+          <p id="sample-status" class="sample-status" role="status" data-zh="正在加载试次…">Loading trial…</p>
+          <div class="demo-grid">
+            <article class="demo-panel">
+              <h3 data-zh="第一视角视频">Egocentric Video</h3>
+              <video id="video" class="demo-frame" playsinline muted preload="auto" aria-label="Egocentric video for the selected trial" data-zh-label="所选试次的第一视角视频"></video>
+            </article>
+            <article class="demo-panel">
+              <div class="demo-panel-heading"><h3 data-zh="MANO 表面力">MANO Surface Force</h3><span id="mesh-status" class="live-marker" hidden></span></div>
+              <div class="demo-frame mesh-frame">
+                <canvas id="hand" class="hand-view" aria-label="MANO mesh. Drag or use the arrow keys to rotate." data-zh-label="MANO 网格，可用鼠标拖动或方向键旋转" role="img" tabindex="0"></canvas>
+                <img id="mesh-fallback" src="assets/mano_hero.png" alt="MANO contact force example" data-zh-alt="MANO 接触力示例" hidden>
+              </div>
+              <div class="demo-panel-footer">
+                <div class="mesh-legend"><span data-zh="低">Low</span><div class="color-ramp" aria-hidden="true"></div><span data-zh="高">High</span></div>
+                <button id="reset-view" type="button" data-zh="重置视角">Reset view</button>
+              </div>
+            </article>
+          </div>
+          <div class="signal-layout">
+            <article class="signal-panel emg-panel"><div class="panel-heading"><h3 data-zh="腕部肌电">Wrist sEMG</h3><span data-zh="18 通道归一化">18 normalized channels</span></div><canvas id="emg" aria-label="Wrist sEMG RMS over time" data-zh-label="腕部肌电均方根时间线" role="img"></canvas><div class="panel-caption"><span data-zh="试次时间">Trial time</span><span>s</span></div></article>
+            <article class="signal-panel pressure-panel"><div class="panel-heading"><h3 data-zh="压力分布">Pressure Map</h3><span data-zh="降采样显示">Downsampled for display</span></div><canvas id="pressure" aria-label="Pressure mat heatmap" data-zh-label="压力板热图" role="img"></canvas><div class="panel-caption"><span data-zh="原始矩阵 105 × 185">105 × 185 source grid</span></div></article>
+            <article class="signal-panel force-panel"><div class="panel-heading"><h3 data-zh="区域力估计">Regional Force</h3><span>N</span></div><div id="region-bars" class="region-bars"></div><div class="panel-caption"><span data-zh="七区域总力">Seven-region sum</span><strong id="total-force">—</strong></div></article>
+          </div>
+          <details class="source-details">
+            <summary data-zh="试次与显示方法">Trial visualization</summary><p id="source-text" hidden></p>
+            <p data-zh="网页对展示用 MANO 网格做平滑和插值，使其与视频对齐。逐帧标签说明缺失网格的补帧方式。压力图按 3 × 5 个单元取平均，区域力曲线独立平滑。压力图与表面力热图共用 pressure2 时间轴。">The viewer smooths and interpolates the displayed MANO geometry to align it with the video. Frame labels identify how missing meshes were filled. The pressure map groups cells in blocks of 3 × 5, and the regional force curves are smoothed separately. The pressure display and surface heatmap use the same pressure2 timestamps.</p>
+          </details>
+        </section>
       </div>
     </section>
     <section class="formats-section" aria-labelledby="formats-title">
@@ -256,5 +229,6 @@
     </section>
   </main>
   <footer class="wrap"><a class="brand" href="#">Ego<span>Myo</span></a><p data-zh="基于第一视角视频与腕部肌电的手部状态估计">Physical Hand State Estimation from Egocentric Video and Wrist Electromyography</p><a href="#explore" data-zh="返回交互演示">Back to the demo</a></footer>
+  <a class="back-to-top" href="#top"><span aria-hidden="true">↑</span> <span data-zh="返回顶部">Back to top</span></a>
 </body>
 </html>

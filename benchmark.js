@@ -6,15 +6,7 @@ const splitLabels = {
   'cross-session': ['Held-out donning of the same hand', '同一只手留出另一次佩戴'],
   'cross-subject': ['Held-out participants', '留出受试者'],
 };
-const ablationLabels = {
-  'w/o sEMG': '去掉肌电输入',
-  'w/o Video': '去掉视频输入',
-  'w/o GME (w/ separate streams)': '去掉 GME（独立输入流）',
-  'w/o RGF (w/ ungated residual)': '去掉 RGF（残差不经门控）',
-  'w/o RSD (w/ direct force head)': '去掉 RSD（直接预测力）',
-};
-
-function makeTable(rows, withModality) {
+function makeTable(rows) {
   const table = document.createElement('table');
   table.className = 'metrics-table';
   const head = table.createTHead();
@@ -26,8 +18,8 @@ function makeTable(rows, withModality) {
     cell.textContent = label;
     return row.appendChild(cell);
   };
-  heading(groups, withModality ? localized('Method', '方法') : localized('Variant', '设置'), 'col').rowSpan = 2;
-  if (withModality) heading(groups, localized('Input', '输入'), 'col').rowSpan = 2;
+  heading(groups, localized('Method', '方法'), 'col').rowSpan = 2;
+  heading(groups, localized('Input', '输入'), 'col').rowSpan = 2;
   for (const group of [['Kinematics (mm)', '姿态（mm）'], ['Region', '手部区域'], ['Vertex', '网格顶点']]) {
     heading(groups, localized(...group), 'colgroup').colSpan = 2;
   }
@@ -36,7 +28,7 @@ function makeTable(rows, withModality) {
   for (const [method, ...values] of rows) {
     const row = body.insertRow();
     row.classList.toggle('method-highlight', method === 'MyoBridge');
-    heading(row, localized(method, ablationLabels[method] ?? method), 'row');
+    heading(row, method, 'row');
     for (const value of values) row.insertCell().textContent = value;
   }
   return table;
@@ -45,31 +37,24 @@ function makeTable(rows, withModality) {
 async function loadBenchmark() {
   const target = document.getElementById('benchmark-table');
   const status = document.getElementById('benchmark-status');
-  const ablationTable = document.getElementById('ablation-table');
   const options = [...document.querySelectorAll('[data-split]')];
   try {
     const response = await fetch('benchmark.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const {results, ablations} = await response.json();
+    const {results} = await response.json();
     let selected = options[0];
     const select = (button, scrollLeft = 0) => {
       selected = button;
       const split = button.dataset.split;
       const rows = results[split];
-      target.replaceChildren(makeTable(rows, true));
+      target.replaceChildren(makeTable(rows));
       target.scrollLeft = scrollLeft;
       status.textContent = `${localized(...splitLabels[split])} · ${localized(`${rows.length} methods`, `${rows.length} 种方法`)}`;
       for (const option of options) option.setAttribute('aria-pressed', String(option === button));
     };
     for (const option of options) option.addEventListener('click', () => select(option));
     select(options[0]);
-    ablationTable.append(makeTable(ablations, false));
-    document.addEventListener('site-languagechange', () => {
-      select(selected, target.scrollLeft);
-      const scrollLeft = ablationTable.scrollLeft;
-      ablationTable.replaceChildren(makeTable(ablations, false));
-      ablationTable.scrollLeft = scrollLeft;
-    });
+    document.addEventListener('site-languagechange', () => select(selected, target.scrollLeft));
   } catch (error) {
     const showError = () => { status.textContent = localized('Benchmark results could not load. Refresh to retry.', '实验表加载失败，请刷新重试。'); };
     showError();

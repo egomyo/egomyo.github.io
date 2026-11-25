@@ -73,9 +73,9 @@ function smoothMeshForDisplay(mesh, sample) {
   const times = sample.mesh_times;
   const stride = sample.vertex_count * 3;
   const smoothed = new Float32Array(mesh);
-  const radius = 4;
-  const sigmaSeconds = .06;
-  const maxCorrection = .004;
+  const radius = 8;
+  const sigmaSeconds = .09;
+  const maxCorrection = .006;
   const usable = sample.mesh_valid.map((valid, frame) => valid && !sample.mesh_completion_method?.[frame]);
   for (let frame = 1; frame < times.length - 1; frame++) {
     if (!usable[frame]) continue;
@@ -86,7 +86,7 @@ function smoothMeshForDisplay(mesh, sample) {
       const after = frame + offset;
       const earlier = times[frame] - times[before];
       const later = times[after] - times[frame];
-      if (!usable[before] || !usable[after] || Math.max(earlier,later) > .145 ||
+      if (!usable[before] || !usable[after] || Math.max(earlier,later) > .275 ||
           times[before+1]-times[before] > .06 || times[after]-times[after-1] > .06) break;
       const pairWeight = 2 * Math.exp(-.5 * (Math.max(earlier,later)/sigmaSeconds)**2);
       neighbors.push({left:before*stride, right:after*stride, leftWeight:pairWeight*later/(earlier+later), rightWeight:pairWeight*earlier/(earlier+later), span:earlier+later});
@@ -109,7 +109,7 @@ function smoothMeshForDisplay(mesh, sample) {
         motion[axis] = mesh[widest.right+vertex+axis] - mesh[widest.left+vertex+axis];
       }
       const speed = Math.hypot(...motion) / widest.span;
-      const blend = Math.max(0, Math.min(1, (.30 - speed) / .22));
+      const blend = Math.max(0, Math.min(1, (.26 - speed) / .20));
       const correction = Math.hypot(...displacement);
       if (!Number.isFinite(correction) || !Number.isFinite(blend)) continue;
       const strength = blend * Math.min(1, maxCorrection / Math.max(correction, 1e-9));
