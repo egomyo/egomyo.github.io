@@ -22,7 +22,7 @@
         <a href="#method-demos" data-zh="方法演示">Demos</a>
         <a href="#method" data-zh="方法">Method</a>
         <a href="#results" data-zh="实验结果">Results</a>
-        <a href="#coverage" data-zh="数据采集">Capture</a>
+        <a href="#coverage" data-zh="数据集">Dataset</a>
         <a href="#download" data-zh="获取数据">Download</a>
       </nav>
       <div class="site-controls">
@@ -142,7 +142,7 @@
     </section>
     <section class="paper-section dataset-section" id="coverage" aria-labelledby="coverage-title">
       <div class="wrap">
-        <div class="section-heading"><h2 id="coverage-title" data-zh="采集与标注">Capture and Annotations</h2><p data-zh="每只手独立佩戴两次腕带。按采集方案，每次佩戴完成 34 种接触组合，每种重复 5 次。">Participants fitted the wristband twice for each hand. The protocol called for five repetitions of all 34 contact configurations after each fitting.</p></div>
+        <div class="section-heading"><h2 id="coverage-title" data-zh="EgoMyo 数据集">EgoMyo Dataset</h2><p data-zh="每只手独立佩戴两次腕带。按采集方案，每次佩戴完成 34 种接触组合，每种重复 5 次。">Participants fitted the wristband twice for each hand. The protocol called for five repetitions of all 34 contact configurations after each fitting.</p></div>
         <div class="paper-grid acquisition-grid">
           <figure class="paper-figure">
             <a href="assets/paper/fig-2.webp" target="_blank" rel="noopener" aria-label="Open Capture, annotations, and signal statistics at full resolution" data-zh-label="查看采集、标注与信号统计原图"><img src="assets/paper/fig-2.webp" width="3000" height="2491" loading="lazy" alt="Capture setup, seven hand regions, synchronized trial data, and signal statistics" data-zh-alt="采集设备、七个手部区域、试次同步数据和信号统计"></a>
@@ -207,27 +207,19 @@
       </div>
     </section>
     <section id="download" class="download wrap" aria-labelledby="download-title">
-      <div class="section-heading"><h2 id="download-title" data-zh="获取 EgoMyo 数据集">Download EgoMyo</h2></div>
+      <div class="section-heading"><h2 id="download-title" data-zh="下载 EgoMyo 数据集">Download the EgoMyo Dataset</h2></div>
       <div class="download-layout">
         <div>
-          <p class="download-description" data-zh="每位受试者的左右手各自打包。包内按腕带佩戴、动作和试次组织，并提供标定、时间戳和有效性标记。">Download one package per participant and hand. Files are grouped by wristband session, action, and trial, with calibration, timestamps, and validity flags.</p>
+          <p class="download-description" data-zh="EgoMyo 公开版包含 33,989 条试次，按受试者和左右手分为 100 个数据包。数据包包含第一视角视频、18 通道腕部肌电，以及三维手部姿态、接触和力的标注。">The public EgoMyo release contains 33,989 trials across 100 archives, one per participant and hand. Each archive includes egocentric video, 18-channel wrist sEMG, and annotations for 3D hand pose, contact, and force.</p>
+          <p class="download-description" data-zh="在 Hugging Face 上查阅数据集说明和发布清单，按需下载全部数据或选定的数据包。">Visit Hugging Face for the dataset card and release manifest. Download the full release or select individual archives.</p>
           <a id="dataset-link" class="button primary" role="link" aria-disabled="true">Hugging Face</a>
         </div>
         <div class="directory">
-          <div class="directory-heading"><span data-zh="数据包目录结构">Example package layout</span></div>
-          <pre><code>subject_&lt;id&gt;/
-  DATASET.json
-  DATA_FORMAT.md
-  calibration/cameras/
-  dataset/subject_&lt;id&gt;/
-    session_01/action_01/trial_01/
-      ego/       <em data-zh="第一视角与时戳">Video and timestamps</em>
-      emg/       <em data-zh="18 通道肌电">18-channel sEMG</em>
-      force/     <em data-zh="压力与区域力">Pressure and regional force</em>
-      pose/      <em data-zh="3D / UVD 姿态">3D / UVD pose</em>
-      contact/   <em data-zh="MANO 与接触">MANO and contact</em>
-      trial_info.json
-  read_dataset.py</code></pre>
+          <div class="directory-heading"><span data-zh="发布文件">Release Files</span></div>
+          <pre><code>data/raw/                 <em data-zh="数据归档（.tar）">Data archives (.tar)</em>
+metadata/packages/        <em data-zh="各数据包的元数据">Per-package metadata</em>
+metadata/membership.json  <em data-zh="基准划分信息">Benchmark split membership</em>
+release.json              <em data-zh="发布清单">Release manifest</em></code></pre>
         </div>
       </div>
     </section>
