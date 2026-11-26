@@ -10,7 +10,7 @@
       if (localStorage.getItem('egomyo-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
     } catch {}
   </script>
-  <link rel="stylesheet" href="style.css?v=abstract">
+  <link rel="stylesheet" href="style.css?v=resource-icons">
   <script src="language.js" defer></script><script src="app.js?v=project" defer></script><script src="benchmark.js" defer></script>
 </head>
 <body id="top">
@@ -76,9 +76,18 @@
         </ul>
         <p class="paper-notes"><span data-zh="* 共同第一作者">* Equal contribution</span> · <span data-zh="† 通讯作者">† Corresponding author</span> · <a href="mailto:dcszj@tsinghua.edu.cn">dcszj@tsinghua.edu.cn</a></p>
         <div class="paper-links" role="group" aria-label="Research resources" data-zh-label="研究资源">
-          <a class="button" href="https://arxiv.org/abs/2611.34224" target="_blank" rel="noopener">arXiv</a>
-          <a class="button" href="https://github.com/SunGL001/EgoMyo" target="_blank" rel="noopener">GitHub</a>
-          <a class="button" id="paper-dataset-link" role="link" aria-disabled="true" data-zh="数据集">Dataset</a>
+          <a class="button" href="https://arxiv.org/abs/2611.34224" target="_blank" rel="noopener">
+            <img src="assets/resource-icons/paper.png" width="16" height="16" alt="">
+            arXiv
+          </a>
+          <a class="button" href="https://github.com/SunGL001/EgoMyo" target="_blank" rel="noopener">
+            <img src="assets/resource-icons/github.png" width="16" height="16" alt="">
+            GitHub
+          </a>
+          <a class="button" id="paper-dataset-link" role="link" aria-disabled="true">
+            <img src="assets/resource-icons/dataset.png" width="16" height="16" alt="">
+            <span data-zh="数据集">Dataset</span>
+          </a>
         </div>
       </div>
       <section class="paper-abstract" aria-labelledby="abstract-title">
