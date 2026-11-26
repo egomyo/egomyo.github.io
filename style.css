@@ -114,7 +114,8 @@ body>main{padding-top:var(--header-height, 96px)}
 }
 .paper-abstract p{
   margin:0 0 12px;
-  color:var(--muted);
+  color:var(--ink);
+  font-size:17px;
   text-wrap:pretty;
 }
 .paper-abstract p:last-child{margin-bottom:0}
